@@ -5,7 +5,7 @@ strategy_interface_t::attacked_checkers(const field_t &field, std::set<std::pair
                                         std::pair<int, int> current_checker) {
     bool changed = false;
 
-    if ((int)(field.fld[current_checker.second][current_checker.first]) == 'a' || (int)(field.fld[current_checker.second][current_checker.first]) == 'b') {
+    if ((field.fld[current_checker.second][current_checker.first]) == 'a' || (field.fld[current_checker.second][current_checker.first]) == 'b') {
         int change_step[2] = {-1, 1};
         for (auto &i: change_step) {
             for (auto &j: change_step) {
@@ -20,7 +20,7 @@ strategy_interface_t::attacked_checkers(const field_t &field, std::set<std::pair
                 }
             }
         }
-    } else if ((int)(field.fld[current_checker.second][current_checker.first]) == 'A' || (int)(field.fld[current_checker.second][current_checker.first]) == 'B'){
+    } else if ((field.fld[current_checker.second][current_checker.first]) == 'A' || (field.fld[current_checker.second][current_checker.first]) == 'B'){
 
         size_t max_R = std::max(current_checker.second - 0, 7 - current_checker.second);
         int change_step[2] = {-1, 1};
