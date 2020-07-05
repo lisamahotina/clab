@@ -26,5 +26,6 @@ private:
     size_t win_counter;
     size_t lose_counter;
     size_t tie_counter;
+//    step_t make_step;
 
 };

@@ -1,16 +1,16 @@
-#include "computer.h"
-
+#include "computer2.h"
+#include <string>
 #include <cassert>
 #include <iostream>
 #include <random>
 #include <vector>
 
 
-computer_strategy_t::computer_strategy_t(std::string name) :
+computer_strategy_second_t::computer_strategy_second_t(std::string name):
         name(std::move(name)) {
 }
 
-step_t computer_strategy_t::select_step(const field_t &field) {
+step_t computer_strategy_second_t::select_step(const field_t &field) {
     std::vector<step_t> checkers;
     if (player_num == 0) {
         for (int r = 0; r < 8; ++r) {
@@ -164,7 +164,7 @@ step_t computer_strategy_t::select_step(const field_t &field) {
         }
     }
 
-    std::shuffle(checkers.begin(), checkers.end(), std::mt19937(std::random_device()()));
+//    std::shuffle(checkers.begin(), checkers.end(), std::mt19937(std::random_device()()));
 //    std:: cout << "select_step "<< checkers.size() << std::endl;
 //    std:: cout << "player "<< name << std::endl;
     selected_checker = checkers[0];
@@ -172,7 +172,7 @@ step_t computer_strategy_t::select_step(const field_t &field) {
     return selected_checker;
 }
 
-step_t computer_strategy_t::make_step(const field_t &fld) {
+step_t computer_strategy_second_t::make_step(const field_t &fld) {
     std::vector<step_t> cells;
     char cell = fld.fld[selected_checker.r - 1][selected_checker.c - 1];
     if (player_num == 0) {
@@ -228,13 +228,13 @@ step_t computer_strategy_t::make_step(const field_t &fld) {
             }
         }
     }
-    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
+//    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
 //    std:: cout << "make_step "<< cells.size() << std::endl;
 
     return cells.front();
 }
 
-step_t computer_strategy_t::attack_step(const field_t &field) {
+step_t computer_strategy_second_t::attack_step(const field_t &field) {
     std::vector<step_t> cells;
     int r = selected_checker.r - 1;
     int c = selected_checker.c - 1;
@@ -300,8 +300,8 @@ step_t computer_strategy_t::attack_step(const field_t &field) {
                     bool found = false;
                     while (k < 8) {
                         ++k;
+
                         if (field.fld[r + i * k][c + j * k] == 'B' || field.fld[r + i * k][c + j * k] == 'b') {
-                            std::cout<< "GG" << std::endl;
                             break;
                         }
                         if (found && field.fld[r + i * k][c + j * k] != '0') {
@@ -341,14 +341,14 @@ step_t computer_strategy_t::attack_step(const field_t &field) {
         }
     }
 
-    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
+//    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
     //std:: cout << "attack_step " << cells.size() << std::endl;
     selected_checker = cells.front();
     return selected_checker;
 }
 
-void computer_strategy_t::print_stat() const {
-    std::cout << "Random model [" << name << "]: " << std::endl;
+void computer_strategy_second_t::print_stat() const {
+    std::cout << "No random model [" << name << "]: " << std::endl;
     computer_interface_t::print_stat();
 }
 

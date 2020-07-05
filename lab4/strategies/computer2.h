@@ -5,9 +5,9 @@
 #include "../game/structures.h"
 #include "computer_interface.h"
 
-class computer_second_strategy_t : public computer_interface_t {
+class computer_strategy_second_t : public computer_interface_t {
 public:
-    explicit computer_second_strategy_t(std::string name);
+    explicit computer_strategy_second_t(std::string name);
 
     step_t make_step(const field_t &field) override;
 
