@@ -1,6 +1,14 @@
-cmake_minimum_required(VERSION 3.16)
-project(untitled14)
+cmake_minimum_required(VERSION 3.15)
+project(teach_project)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled14 main.cpp)
+set(SOURCES main.cpp)
+
+
+add_executable(teach_project ${SOURCES})
+
+add_subdirectory(strategies)
+add_subdirectory(game)
+
+target_link_libraries(teach_project strategies game)

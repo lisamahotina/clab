@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/structures.h"
+#include "../game/structures.h"
 
 class strategy_interface_t {
 public:
@@ -24,5 +24,4 @@ public:
 
     size_t checkers = 0;
     size_t player_num = -1;
-
 };

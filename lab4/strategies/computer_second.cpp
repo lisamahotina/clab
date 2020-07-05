@@ -1,13 +1,13 @@
-#include "computer.h"
+#include "computer_second.h"
 
 #include <iostream>
 #include <vector>
 #include <random>
 
-computer_strategy_t::computer_strategy_t(std::string name) :
+computer_second_strategy_t::computer_second_strategy_t(std::string name) :
         name(std::move(name)) {}
 
-step_t computer_strategy_t::select_step(const field_t &field) {
+step_t computer_second_strategy_t::select_step(const field_t &field) {
     std::vector<std::pair<int, int>> checkers;
     check_all_checkers(checkers, player_num, field);
     if (!checkers.empty()) {
@@ -16,12 +16,12 @@ step_t computer_strategy_t::select_step(const field_t &field) {
         return selected_checker;
     }
     check_possible_move(checkers, player_num, field);
-    std::shuffle(checkers.begin(), checkers.end(), std::mt19937(std::random_device()()));
+//    std::shuffle(checkers.begin(), checkers.end(), std::mt19937(std::random_device()()));
     selected_checker = {checkers[0].first, checkers[0].second};
     return selected_checker;
 }
 
-step_t computer_strategy_t::make_step(const field_t &fld) {
+step_t computer_second_strategy_t::make_step(const field_t &fld) {
     std::vector<step_t> cells;
     char cell = fld.fld[selected_checker.r][selected_checker.c];
     if (cell == 'W' || cell == 'B') {
@@ -67,11 +67,11 @@ step_t computer_strategy_t::make_step(const field_t &fld) {
         }
     }
 
-    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
+//    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
     return cells.front();
 }
 
-step_t computer_strategy_t::attack_step(const field_t &field) {
+step_t computer_second_strategy_t::attack_step(const field_t &field) {
     std::vector<step_t> cells;
     char cell = field.fld[selected_checker.r][selected_checker.c];
     if (cell == 'W' || cell == 'B') {
@@ -127,29 +127,12 @@ step_t computer_strategy_t::attack_step(const field_t &field) {
             }
         }
     }
-    std::shuffle(cells.begin(), cells.end(), std::mt19937(std::random_device()()));
-//    std::cout << cell << " " << selected_checker.r << " " << selected_checker.c << std::endl;
-//    std::cout << "Field:" << std::endl;
-//    std::cout << " |0|1|2|3|4|5|6|7|" << std::endl;
-//
-//    int k = 0;
-//    for (const auto &line : field.fld) {
-//        std::cout << k << '|';
-//        for (char c : line) {
-//            std::cout << c << '|';
-//        }
-//        std::cout << std::endl;
-//        ++k;
-//    }
-//    std::cout << "SOSU" << std::endl;
-//    std::cout << cells.size() << std::endl;
-//    std::cout << "TUT" << std::endl;
     selected_checker = cells.front();
 
     return selected_checker;
 }
 
-void computer_strategy_t::print_stat() const {
+void computer_second_strategy_t::print_stat() const {
     std::cout << "Random model [" << name << "]: " << std::endl;
     computer_interface_t::print_stat();
 }
