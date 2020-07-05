@@ -1,4 +1,4 @@
-#include "computer2.h"
+#include "computer_second.h"
 
 #include <cassert>
 #include <iostream>

@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "../../../Desktop/lab4/strategies/interface.h"
 
 bool
 strategy_interface_t::attacked_checkers(const field_t &field, std::set<std::pair<int, int> > &attack_checkers,

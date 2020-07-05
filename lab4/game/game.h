@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <vector>
+#include <unordered_set>
+#include <set>
 
 #include "../strategies/interface.h"
 #include "structures.h"
@@ -21,11 +23,17 @@ private:
         IN_PROGRESS
     };
 
-    game_outcome_t is_win(size_t player_num) const;
-    apply_step_t apply_step(const step_t &step, size_t player_num, std::set<std::pair<int, int> > &attack_checkers);
+    game_outcome_t is_win(size_t counter, std::set<std::pair<int, int>> &checkers) const;
+
+    bool apply_select_step(const step_t &step, std::set<std::pair<int, int>> &checkers, size_t player_num);
+
+    bool apply_move_step(const step_t &select_step, const step_t &target_step);
+
+    bool apply_attack_step(step_t &select_step, step_t &attack_step, size_t player_num);
+
 
     field_t field;
     std::vector<player_t> players;
-    size_t steps_amount = 0;
+    size_t counter_steps{};
 };
 
