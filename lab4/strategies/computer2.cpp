@@ -19,17 +19,17 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
         bool changed;
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                if (fld.fld[row][col] == 'a' || fld.fld[row][col] == 'A') {
+                if (fld.fld[row][col] == 'w' || fld.fld[row][col] == 'W') {
                     changed = attacked_checkers(fld, attack_checkers, std::pair<size_t, size_t>(col, row));
 
                     if (!changed) {
-                        if ((fld.fld[row + 1][col + 1] == '+' || fld.fld[row + 1][col - 1] == '+') &&
-                            fld.fld[row][col] == 'a') {
+                        if ((fld.fld[row + 1][col + 1] == '*' || fld.fld[row + 1][col - 1] == '*') &&
+                            fld.fld[row][col] == 'w') {
                             move_checkers.insert(std::pair<size_t, size_t>(col, row));
                         }
-                        if ((fld.fld[row + 1][col + 1] == '+' || fld.fld[row + 1][col - 1] == '+' ||
-                             fld.fld[row - 1][col + 1] == '+' || fld.fld[row - 1][col - 1] == '+') &&
-                            fld.fld[row][col] == 'A') {
+                        if ((fld.fld[row + 1][col + 1] == '*' || fld.fld[row + 1][col - 1] == '*' ||
+                             fld.fld[row - 1][col + 1] == '*' || fld.fld[row - 1][col - 1] == '*') &&
+                            fld.fld[row][col] == 'W') {
                             move_checkers.insert(std::pair<size_t, size_t>(col, row));
                         }
                     }
@@ -43,10 +43,10 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
             std::vector<std::pair<int, int>> possible_checkers(attack_checkers.begin(), attack_checkers.end());
             selected_checker = possible_checkers.front();
 
-            if (fld.fld[selected_checker.second][selected_checker.first] == 'A' ||
-                fld.fld[selected_checker.second][selected_checker.first] == 'a') {
+            if (fld.fld[selected_checker.second][selected_checker.first] == 'W' ||
+                fld.fld[selected_checker.second][selected_checker.first] == 'w') {
                 int max_R;
-                if (fld.fld[selected_checker.second][selected_checker.first] == 'A') {
+                if (fld.fld[selected_checker.second][selected_checker.first] == 'W') {
                     max_R = std::max(selected_checker.second - 0, 7 - selected_checker.second);
                 } else {
                     max_R = 2;
@@ -57,7 +57,7 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
                         bool enemy = false;
                         for (int R = 1; R <= max_R; ++R) {
                             if (enemy &&
-                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '+') {
+                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '*') {
                                 break;
                             }
                             if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'b' ||
@@ -65,7 +65,7 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
                                 enemy = true;
                             }
                             if (enemy &&
-                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '+') {
+                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '*') {
                                 possible_moves.emplace_back(selected_checker.first + j * R,
                                                             selected_checker.second + i * R);
                             }
@@ -80,21 +80,21 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
             std::vector<std::pair<int, int>> possible_checkers(move_checkers.begin(), move_checkers.end());
             selected_checker = possible_checkers.front();
 
-            if (fld.fld[selected_checker.second][selected_checker.first] == 'a') {
-                if (fld.fld[selected_checker.second + 1][selected_checker.first + 1] == '+') {
+            if (fld.fld[selected_checker.second][selected_checker.first] == 'w') {
+                if (fld.fld[selected_checker.second + 1][selected_checker.first + 1] == '*') {
                     possible_moves.emplace_back(selected_checker.first + 1, selected_checker.second + 1);
                 } else {
                     possible_moves.emplace_back(selected_checker.first - 1, selected_checker.second + 1);
                 }
             }
 
-            if (fld.fld[selected_checker.second][selected_checker.first] == 'A') {
+            if (fld.fld[selected_checker.second][selected_checker.first] == 'W') {
                 size_t max_R = std::max(selected_checker.second - 0, 7 - selected_checker.second);
                 int change_step[2] = {-1, 1};
                 for (auto &i: change_step) {
                     for (auto &j: change_step) {
                         for (int R = 1; R < max_R; ++R) {
-                            if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '+') {
+                            if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '*') {
                                 possible_moves.emplace_back(selected_checker.first + j * R,
                                                             selected_checker.second + i * R);
                             } else {
@@ -115,12 +115,12 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
                     changed = attacked_checkers(fld, attack_checkers, std::pair<size_t, size_t>(col, row));
 
                     if (!changed) {
-                        if ((fld.fld[row - 1][col + 1] == '+' || fld.fld[row - 1][col - 1] == '+') &&
+                        if ((fld.fld[row - 1][col + 1] == '*' || fld.fld[row - 1][col - 1] == '*') &&
                             fld.fld[row][col] == 'b') {
                             move_checkers.insert(std::pair<size_t, size_t>(col, row));
                         }
-                        if ((fld.fld[row + 1][col + 1] == '+' || fld.fld[row + 1][col - 1] == '+' ||
-                             fld.fld[row - 1][col + 1] == '+' || fld.fld[row - 1][col - 1] == '+') &&
+                        if ((fld.fld[row + 1][col + 1] == '*' || fld.fld[row + 1][col - 1] == '*' ||
+                             fld.fld[row - 1][col + 1] == '*' || fld.fld[row - 1][col - 1] == '*') &&
                             fld.fld[row][col] == 'B') {
                             move_checkers.insert(std::pair<size_t, size_t>(col, row));
                         }
@@ -150,15 +150,15 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
                         bool enemy = false;
                         for (int R = 1; R <= max_R; ++R) {
                             if (enemy &&
-                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '+') {
+                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '*') {
                                 break;
                             }
-                            if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'a' ||
-                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'A') {
+                            if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'w' ||
+                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'W') {
                                 enemy = true;
                             }
                             if (enemy &&
-                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '+') {
+                                fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '*') {
                                 possible_moves.emplace_back(selected_checker.first + j * R,
                                                             selected_checker.second + i * R);
                             }
@@ -173,7 +173,7 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
             selected_checker = possible_checkers.front();
 
             if (fld.fld[selected_checker.second][selected_checker.first] == 'b') {
-                if (fld.fld[selected_checker.second - 1][selected_checker.first + 1] == '+') {
+                if (fld.fld[selected_checker.second - 1][selected_checker.first + 1] == '*') {
                     possible_moves.emplace_back(selected_checker.first + 1, selected_checker.second - 1);
                 } else {
                     possible_moves.emplace_back(selected_checker.first - 1, selected_checker.second - 1);
@@ -186,7 +186,7 @@ step_t computer_strategy_t_2::make_step(const field_t &fld) {
                 for (auto &i: change_step) {
                     for (auto &j: change_step) {
                         for (int R = 1; R < max_R; ++R) {
-                            if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '+') {
+                            if (fld.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '*') {
                                 possible_moves.emplace_back(selected_checker.first + j * R,
                                                             selected_checker.second + i * R);
                             } else {
@@ -211,7 +211,7 @@ bool computer_strategy_t_2::possible_attack(const field_t &fld, std::set<std::pa
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             if (player_num == 0) {
-                if (fld.fld[i][j] == 'a' || fld.fld[i][j] == 'A') {
+                if (fld.fld[i][j] == 'w' || fld.fld[i][j] == 'W') {
                     if (attacked_checkers(fld, attack_checker, std::pair<size_t, size_t>(j, i))) {
                         changed = true;
                     }
@@ -243,7 +243,7 @@ step_t computer_strategy_t_2::next_step(const field_t &field, std::pair<size_t, 
                 for (auto &j: change_step) {
                     if (field.fld[selected_checker.second + i][selected_checker.first + j] == 'b' ||
                         field.fld[selected_checker.second + i][selected_checker.first + j] == 'B') {
-                        if (field.fld[selected_checker.second + i * 2][selected_checker.first + j * 2] == '+') {
+                        if (field.fld[selected_checker.second + i * 2][selected_checker.first + j * 2] == '*') {
                             possible_moves.emplace_back(selected_checker.first + j * 2,
                                                         selected_checker.second + i * 2);
 
@@ -253,7 +253,7 @@ step_t computer_strategy_t_2::next_step(const field_t &field, std::pair<size_t, 
             }
         }
 
-        if (field.fld[selected_checker.second][selected_checker.first] == 'A') {
+        if (field.fld[selected_checker.second][selected_checker.first] == 'W') {
             size_t max_R = std::max(selected_checker.second - 0, 7 - selected_checker.second);
             int change_step[2] = {-1, 1};
             for (auto &i: change_step) {
@@ -261,23 +261,15 @@ step_t computer_strategy_t_2::next_step(const field_t &field, std::pair<size_t, 
                     bool enemy = false;
                     for (int R = 1; R <= max_R; ++R) {
                         if (enemy &&
-                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '+') {
+                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '*') {
                             break;
                         }
                         if (field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'b' ||
                             field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'B') {
-//                        std::cout << "Enemy " << selected_checker.first + j * R + 1 << ' '
-//                                      << selected_checker.second + i * R + 1 << ' '
-//                                      << field.fld[selected_checker.second + i * R][selected_checker.first + j * R]
-//                                      << std::endl;
                             enemy = true;
                         }
                         if (enemy &&
-                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '+') {
-//                        std::cout << "Cell " << selected_checker.first + j * R + 1 << ' '
-//                                      << selected_checker.second + i * R + 1 << ' '
-//                                      << field.fld[selected_checker.second + i * R][selected_checker.first + j * R]
-//                                      << std::endl;
+                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '*') {
                             possible_moves.emplace_back(selected_checker.first + j * R,
                                                         selected_checker.second + i * R);
                         }
@@ -290,9 +282,9 @@ step_t computer_strategy_t_2::next_step(const field_t &field, std::pair<size_t, 
             int change_step[2] = {-1, 1};
             for (auto &i: change_step) {
                 for (auto &j: change_step) {
-                    if (field.fld[selected_checker.second + i][selected_checker.first + j] == 'a' ||
-                        field.fld[selected_checker.second + i][selected_checker.first + j] == 'A') {
-                        if (field.fld[selected_checker.second + i * 2][selected_checker.first + j * 2] == '+') {
+                    if (field.fld[selected_checker.second + i][selected_checker.first + j] == 'w' ||
+                        field.fld[selected_checker.second + i][selected_checker.first + j] == 'W') {
+                        if (field.fld[selected_checker.second + i * 2][selected_checker.first + j * 2] == '*') {
                             possible_moves.emplace_back(selected_checker.first + j * 2,
                                                         selected_checker.second + i * 2);
 
@@ -310,15 +302,15 @@ step_t computer_strategy_t_2::next_step(const field_t &field, std::pair<size_t, 
                     bool enemy = false;
                     for (int R = 1; R <= max_R; ++R) {
                         if (enemy &&
-                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '+') {
+                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] != '*') {
                             break;
                         }
-                        if (field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'a' ||
-                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'A') {
+                        if (field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'w' ||
+                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == 'W') {
                             enemy = true;
                         }
                         if (enemy &&
-                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '+') {
+                            field.fld[selected_checker.second + i * R][selected_checker.first + j * R] == '*') {
                             possible_moves.emplace_back(selected_checker.first + j * R,
                                                         selected_checker.second + i * R);
                         }

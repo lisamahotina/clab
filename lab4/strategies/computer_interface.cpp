@@ -1,4 +1,4 @@
-#include "computer_interface.h"
+#include "../strategies/computer_interface.h"
 
 #include <cassert>
 #include <iostream>

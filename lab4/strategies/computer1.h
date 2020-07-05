@@ -7,7 +7,7 @@
 
 class computer_strategy_t_1 : public computer_interface_t {
 public:
-    explicit computer_strategy_t_1(std::string name);
+    explicit computer_strategy_t_1(std::string name) ;
 
     bool possible_attack(const field_t &field, std::set<std::pair<int, int>> &attack_checker) override;
 

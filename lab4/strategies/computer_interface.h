@@ -1,6 +1,6 @@
 #pragma once
 
-#include "interface.h"
+#include "../strategies/interface.h"
 
 class computer_interface_t : public strategy_interface_t {
 public:

@@ -19,7 +19,6 @@ void human_strategy_t::on_tie() {
 step_t human_strategy_t::make_step(const field_t &fld) {
     std::cout << "Field:" << std::endl;
     int i = 1;
-//    std::cout << "  1 2 3 4 5 6 7 8" << std::endl;
     std::cout << "  A B C D E F G H" << std::endl;
     for (const auto &line : fld.fld) {
         std::cout << i << ' ';
@@ -34,13 +33,27 @@ step_t human_strategy_t::make_step(const field_t &fld) {
     int x_from = -1, y_from;
     char x_fr;
     std::cin >> x_fr >> y_from;
-    x_from = (int)x_fr - 64;
+    if (x_fr == 'A') { x_from = 1;}
+    if (x_fr == 'B') { x_from = 2;}
+    if (x_fr == 'C') { x_from = 3;}
+    if (x_fr == 'D') { x_from = 4;}
+    if (x_fr == 'E') { x_from = 5;}
+    if (x_fr == 'F') { x_from = 6;}
+    if (x_fr == 'G') { x_from = 7;}
+    if (x_fr == 'H') { x_from = 8;}
 
     std::cout << "Type coordinates of the move: " << std::endl;
     int x_to = -1, y_to;
     char x_t;
     std::cin >> x_t >> y_to;
-    x_to = (int)x_t - 64;
+    if (x_t == 'A') { x_to = 1;}
+    if (x_t == 'B') { x_to = 2;}
+    if (x_t == 'C') { x_to = 3;}
+    if (x_t == 'D') { x_to = 4;}
+    if (x_t == 'E') { x_to = 5;}
+    if (x_t == 'F') { x_to = 6;}
+    if (x_t == 'G') { x_to = 7;}
+    if (x_t == 'H') { x_to = 8;}
 
     return {x_from, y_from, x_to, y_to};
 }
@@ -63,7 +76,14 @@ step_t human_strategy_t::next_step(const field_t &fld, std::pair<size_t, size_t>
     int x_to = -1, y_to;
     char x_t;
     std::cin >> x_t >> y_to;
-    x_to = (int)x_t - 64;
+    if (x_t == 'A') { x_to = 1;}
+    if (x_t == 'B') { x_to = 2;}
+    if (x_t == 'C') { x_to = 3;}
+    if (x_t == 'D') { x_to = 4;}
+    if (x_t == 'E') { x_to = 5;}
+    if (x_t == 'F') { x_to = 6;}
+    if (x_t == 'G') { x_to = 7;}
+    if (x_t == 'H') { x_to = 8;}
     return {x_from, y_from, x_to, y_to};
 }
 
@@ -73,12 +93,19 @@ bool human_strategy_t::possible_attack(const field_t &fld,
     bool changed = false;
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-                if (fld.fld[i][j] == (char) (player_num + 97) || fld.fld[i][j] == (char) (player_num + 65)) {
+            if (player_num == 0) {
+                if (fld.fld[i][j] == 'w' || fld.fld[i][j] == 'W') {
                     if (attacked_checkers(fld, attack_checker, std::pair<size_t, size_t>(j, i))) {
                         changed = true;
                     }
                 }
-
+            } else {
+                if (fld.fld[i][j] == 'b' || fld.fld[i][j] == 'B') {
+                    if (attacked_checkers(fld, attack_checker, std::pair<size_t, size_t>(j, i))) {
+                        changed = true;
+                    }
+                }
+            }
         }
     }
 
@@ -88,8 +115,22 @@ bool human_strategy_t::possible_attack(const field_t &fld,
 void human_strategy_t::on_incorrect_step(const step_t &step) const {
     std::cout << "Incorrect step:" << std::endl;
     char ch = '-';
-    ch = (char)(step.x_from + 64);
+    if (step.x_from == 1) {ch = 'A';}
+    if (step.x_from == 2) {ch = 'B';}
+    if (step.x_from == 3) {ch = 'C';}
+    if (step.x_from == 4) {ch = 'D';}
+    if (step.x_from == 5) {ch = 'E';}
+    if (step.x_from == 6) {ch = 'F';}
+    if (step.x_from == 7) {ch = 'G';}
+    if (step.x_from == 8) {ch = 'H';}
     std::cout << "From x: " << ch << "; y: " << step.y_from << std::endl;
-    ch = (char)(step.x_to + 64);
+    if (step.x_to == 1) {ch = 'A';}
+    if (step.x_to == 2) {ch = 'B';}
+    if (step.x_to == 3) {ch = 'C';}
+    if (step.x_to == 4) {ch = 'D';}
+    if (step.x_to == 5) {ch = 'E';}
+    if (step.x_to == 6) {ch = 'F';}
+    if (step.x_to == 7) {ch = 'G';}
+    if (step.x_to == 8) {ch = 'H';}
     std::cout << "To x: " << ch << "; y: " << step.y_to << std::endl;
 }

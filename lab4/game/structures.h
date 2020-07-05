@@ -26,13 +26,13 @@ struct field_t {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i < 3) && ((i + j) % 2 == 1)) {
-                    fld[i][j] = 'a';
+                    fld[i][j] = 'w';
                 } else if ((i >= 5) && ((i + j) % 2 == 1)) {
                     fld[i][j] = 'b';
                 } else if ((i + j) % 2 == 1) {
-                    fld[i][j] = '+';
+                    fld[i][j] = '*';
                 } else {
-                    fld[i][j] = '-';
+                    fld[i][j] = '.';
                 }
             }
         }
