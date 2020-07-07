@@ -55,12 +55,11 @@ public:
 };
 
 int main() {
-    //test
     int size = 3;
 
     Create<int> a(size);
 
-    for (int i=0; i<size; i++){
+    for (int i = 0; i < size; i++) {
         a[i] = i;
     }
 
